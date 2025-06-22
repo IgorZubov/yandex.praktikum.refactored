@@ -32,22 +32,7 @@ export default abstract class Block<Props extends object> {
     this.render();
   }
 
-  protected componentDidMount() {}
-
-  private mountComponent() {
-    this.componentDidMount();
-  }
-
-  protected componentWillUnmount() {}
-
-  private unmountComponent() {
-    if (this.domElement) {
-      this.componentWillUnmount();
-    }
-  }
-
   protected render() {
-    this.unmountComponent();
     const fragment = this.compile();
 
     if (this.domElement && fragment) {
@@ -55,6 +40,5 @@ export default abstract class Block<Props extends object> {
     }
 
     this.domElement = fragment;
-    this.mountComponent();
   }
 }
