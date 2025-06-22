@@ -8,12 +8,4 @@ export default class Form extends Block {
       <button>Submit</button>
     </form>
   `;
-
-  protected events = {
-    submit: (event) => {
-      event.preventDefault();
-      console.log(this.refs.login.value);
-      console.log(this.refs.password.value);
-    },
-  };
 }
