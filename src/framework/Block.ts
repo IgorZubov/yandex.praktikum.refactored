@@ -72,8 +72,6 @@ export default abstract class Block<Props extends BlockOwnProps = BlockOwnProps>
     if (this.domElement) {
       this.componentWillUnmount();
       this.removeListeners();
-      /** вызываем очистку в порядке, обратном созданию */
-      this.children.reverse().forEach(child => child.unmountComponent());
     }
   }
 
@@ -107,36 +105,26 @@ export default abstract class Block<Props extends BlockOwnProps = BlockOwnProps>
     this.mountComponent();
   }
 
-  private compile(): Element | null {
-    const html = Handlebars.compile(this.template)(this.props);
-    const templateElement = document.createElement('template');
-    templateElement.innerHTML = html;
-    const fragment = templateElement.content;
+  private compile() {
+  const html = Handlebars.compile(this.template)(this.props);
+  const templateElement = document.createElement("template");
 
-    if (this.props.__children) {
-      /** Сохраняем все дочерние компоненты */
-      this.children = this.props.__children.map((child) => child.component);
+  templateElement.innerHTML = html;
 
-      /** Для каждого элемента массива вызываем метод embed, который заменит заглушку на компонент */
-      this.props.__children.forEach((child) => {
-        child.embed(fragment);
-      });
-    }
+  const fragment = templateElement.content;
 
-    /** Если ссылки переданы, то используем их как начальное состояние аккумулятора в reduce */
-    const defaultRefs = this.props?.__refs ?? {};
-    this.refs = Array.from(fragment.querySelectorAll('[ref]')).reduce(
-      (list, element) => {
-        const key = element.getAttribute('ref') as string;
-        list[key] = element as HTMLElement;
-        element.removeAttribute('ref');
-        return list;
-      },
-      defaultRefs,
-    );
+  this.refs = Array.from(fragment.querySelectorAll("\[ref\]")).reduce(
+    (list, element) => {
+      const key = element.getAttribute("ref");
+      list[key] = element;
+      element.removeAttribute("ref");
+      return list;
+    },
+    {}
+  );
 
-    return templateElement.content.firstElementChild;
-  }
+  return templateElement.content.firstElementChild;
+}
 
   // Методы для обратной совместимости с существующим кодом
   public getContent(): HTMLElement {
