@@ -26,12 +26,7 @@ export default abstract class Block<Props extends object> {
 
     return this.domElement;
   }
-
-  public setProps(props: Partial<Props>) {
-    this.props = { ...this.props, ...props };
-    this.render();
-  }
-
+  
   protected render() {
     const fragment = this.compile();
 
