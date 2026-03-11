@@ -1,9 +1,16 @@
-import Block from '../../framework/Block'
+import Block from '../../framework/Block';
+import type { BlockOwnProps } from '../../framework/Block';
 
-export default class Button extends Block {
+interface ButtonProps extends BlockOwnProps {
+  id?: string;
+  text?: string;
+  disabled?: boolean;
+}
+
+export default class Button extends Block<ButtonProps> {
   static componentName = 'Button';
-  
+
   protected template = `
-    <button>{{label}}</button>
+    <button id="{{id}}" class="button" {{#if disabled}}disabled{{/if}}>{{text}}</button>
   `;
 }

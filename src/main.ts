@@ -1,13 +1,26 @@
-import Form from './components/form/Form';
+import './style.css';
+import Handlebars from 'handlebars';
+import { registerComponent } from './framework/ComponentRegistry';
 import Button from './components/button/Button';
 import Input from './components/input/Input';
-import {registerComponent} from './framework/ComponentRegistry';
+import Select from './components/select/Select';
+import ErrorMessage from './components/errorMessage/ErrorMessage';
+import Link from './components/link/Link';
+import Label from './components/label/Label';
+import Footer from './components/footer/Footer';
+import App from './App';
+
+Handlebars.registerHelper('concat', function (...args: unknown[]) {
+  return args.slice(0, -1).join('');
+});
 
 registerComponent(Button);
 registerComponent(Input);
+registerComponent(Select);
+registerComponent(ErrorMessage);
+registerComponent(Link);
+registerComponent(Label);
+registerComponent(Footer);
 
-const form = new Form();
-const FormElement = form.element();
-
-document.querySelector<HTMLDivElement>('#app')!.appendChild(FormElement);
-// document.body.appendChild(FormElement);
+const app = new App();
+app.render();
