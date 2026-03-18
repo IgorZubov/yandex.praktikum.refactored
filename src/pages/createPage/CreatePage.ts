@@ -31,7 +31,7 @@ export default class CreatePage extends Block<CreatePageProps> {
   protected events = {
     click: (e: Event) => {
       const target = e.target as HTMLElement;
-
+      console.log('Clicked element:', target);
       if (target.id === 'add-question') {
         const input = this.refs['questionInput'] as HTMLInputElement;
         if (input?.value.trim()) {

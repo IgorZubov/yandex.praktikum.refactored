@@ -9,6 +9,8 @@ interface InputProps extends BlockOwnProps {
 }
 
 export default class Input extends Block<InputProps> {
+  static componentName = 'Input';
+
   protected template = `
     <input id="{{id}}" type="{{type}}" placeholder="{{placeholder}}" value="{{value}}" class="input">
   `;
