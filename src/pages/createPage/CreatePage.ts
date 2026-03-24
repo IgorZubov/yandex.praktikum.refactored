@@ -6,7 +6,7 @@ interface CreatePageProps extends BlockOwnProps {
   createButtonEnabled?: boolean;
   onAddQuestion?: (question: string) => void;
   onCreateQuestionnaire?: () => void;
-  onChangePage?: (page: string) => void;
+  onNavigate?: (path: string) => void;
 }
 
 export default class CreatePage extends Block<CreatePageProps> {
@@ -30,7 +30,7 @@ export default class CreatePage extends Block<CreatePageProps> {
 
   protected events = {
     click: (e: Event) => {
-      const target = e.target as HTMLElement;
+      const target = e.target as HTMLAnchorElement;
       console.log('Clicked element:', target);
       if (target.id === 'add-question') {
         const input = this.refs['questionInput'] as HTMLInputElement;
@@ -39,9 +39,10 @@ export default class CreatePage extends Block<CreatePageProps> {
         }
       } else if (target.id === 'create-questionnaire') {
         this.props.onCreateQuestionnaire?.();
-      } else if (target.dataset.page) {
+      } else if (target.tagName === 'A' && target.href) {
         e.preventDefault();
-        this.props.onChangePage?.(target.dataset.page);
+        const url = new URL(target.href);
+        this.props.onNavigate?.(url.pathname);
       }
     },
   };

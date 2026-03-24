@@ -1,6 +1,7 @@
 import CreatePage from './pages/createPage/CreatePage';
 import AnswerPage from './pages/answerPage/AnswerPage';
 import { mockQuestions } from './mockData';
+import Router from './framework/Router';
 
 export default class App {
   private state = {
@@ -9,12 +10,31 @@ export default class App {
   };
 
   private appElement: HTMLElement;
+  private router: Router;
 
   constructor() {
     this.appElement = document.getElementById('app')!;
+    this.router = new Router();
+
+    this.router
+      .use('/', () => {
+        this.state.currentPage = 'createQuestionnaire';
+        this.renderPage();
+      })
+      .use('/answers', () => {
+        this.state.currentPage = 'answerQuestionnaire';
+        this.renderPage();
+      })
+      .onNotFound(() => {
+        this.router.go('/');
+      });
   }
 
   render() {
+    this.router.start();
+  }
+
+  private renderPage() {
     this.appElement.innerHTML = '';
 
     let page: CreatePage | AnswerPage;
@@ -25,13 +45,13 @@ export default class App {
         createButtonEnabled: this.state.questions.length === 0,
         onAddQuestion: (q: string) => this.addQuestion(q),
         onCreateQuestionnaire: () => this.createQuestionnaire(),
-        onChangePage: (p: string) => this.changePage(p),
+        onNavigate: (path: string) => this.router.go(path),
       });
     } else {
       page = new AnswerPage({
         questions: mockQuestions,
         answerOptions: ['Yes', 'No', 'Maybe'],
-        onChangePage: (p: string) => this.changePage(p),
+        onNavigate: (path: string) => this.router.go(path),
         onSubmit: () => this.submitAnswers(),
       });
     }
@@ -41,18 +61,13 @@ export default class App {
 
   private addQuestion(question: string) {
     this.state.questions.push(question);
-    this.render();
+    this.router.go('/');
   }
 
   private createQuestionnaire() {
     if (this.state.questions.length > 0) {
-      this.changePage('answerQuestionnaire');
+      this.router.go('/answers');
     }
-  }
-
-  private changePage(page: string) {
-    this.state.currentPage = page;
-    this.render();
   }
 
   private submitAnswers() {
