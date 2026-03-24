@@ -12,7 +12,7 @@ interface CreatePageProps extends BlockOwnProps {
 export default class CreatePage extends Block<CreatePageProps> {
   protected template = `
     <div class="app">
-      <h1>Create Questionnaire</h1>
+      <h1>Create Questionnaire FROM AUTO DEPLOY!</h1>
       {{Input id="question-input" type="text" placeholder="Enter question" ref="questionInput"}}
       {{Button id="add-question" text="Add Question"}}
       <p>Questions: {{questions.length}}/20</p>
