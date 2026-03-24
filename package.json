@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:gh": "vite build --base=/yandex.praktikum.refactored/ && cp dist/index.html dist/404.html",
     "preview": "vite preview"
   },
   "devDependencies": {
