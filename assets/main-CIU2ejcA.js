@@ -36,7 +36,7 @@ Expecting `+P.join(", ")+", got '"+(this.terminals_[b]||b)+"'":w="Parse error on
     </footer>
   `)}}A(It,"componentName","Footer");class mr extends T{constructor(){super(...arguments);A(this,"template",`
     <div class="app">
-      <h1>Create Questionnaire</h1>
+      <h1>Create Questionnaire FROM AUTO DEPLOY!</h1>
       {{Input id="question-input" type="text" placeholder="Enter question" ref="questionInput"}}
       {{Button id="add-question" text="Add Question"}}
       <p>Questions: {{questions.length}}/20</p>
