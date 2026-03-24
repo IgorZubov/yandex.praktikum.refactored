@@ -4,7 +4,7 @@ import type { BlockOwnProps } from '../../framework/Block';
 interface AnswerPageProps extends BlockOwnProps {
   questions?: string[];
   answerOptions?: string[];
-  onChangePage?: (page: string) => void;
+  onNavigate?: (path: string) => void;
   onSubmit?: () => void;
 }
 
@@ -27,13 +27,14 @@ export default class AnswerPage extends Block<AnswerPageProps> {
 
   protected events = {
     click: (e: Event) => {
-      const target = e.target as HTMLElement;
+      const target = e.target as HTMLAnchorElement;
 
       if (target.id === 'submit-answers') {
         this.props.onSubmit?.();
-      } else if (target.dataset.page) {
+      } else if (target.tagName === 'A' && target.href) {
         e.preventDefault();
-        this.props.onChangePage?.(target.dataset.page);
+        const url = new URL(target.href);
+        this.props.onNavigate?.(url.pathname);
       }
     },
   };

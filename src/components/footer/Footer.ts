@@ -5,8 +5,8 @@ export default class Footer extends Block {
 
   protected template = `
     <footer class="footer">
-      {{Link href="#" class="footer-link" data-page="createQuestionnaire" text="Create Questionnaire"}}
-      {{Link href="#" class="footer-link" data-page="answerQuestionnaire" text="Answer Questionnaire"}}
+      {{Link href="/" class="footer-link" text="Create Questionnaire"}}
+      {{Link href="/answers" class="footer-link" text="Answer Questionnaire"}}
     </footer>
   `;
 }
