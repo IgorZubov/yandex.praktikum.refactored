@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import { HelperOptions } from 'handlebars';
+import type { HelperOptions } from 'handlebars';
 
 
 /** Уникальный идентификатор для заглушки */
@@ -46,7 +46,7 @@ function registerComponent(Component: any) {
         },
       });
       
-      return `<div ${dataAttribute}></div>`;
+      return new Handlebars.SafeString(`<div ${dataAttribute}></div>`);
     },
   );
 }

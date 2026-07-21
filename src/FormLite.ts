@@ -1,16 +1,16 @@
-import Block from '../../framework/Block'
-import type { BlockOwnProps } from '../../framework/Block';
+import Block from './framework/Block'
+import type { BlockOwnProps } from './framework/Block';
 
 interface FormProps extends BlockOwnProps {
   buttonName?: string;
 }
 
-export default class Form extends Block<FormProps> {
+export default class FormInline extends Block<FormProps> {
   protected template = `
     <form>
       <input type="text" placeholder="Логин" ref="login">
       <input type="password" placeholder="Пароль" ref="password">
-      <button>{{buttonName}}</button>
+      <button>{{ buttonName }}</button>
     </form>
   `;
 
